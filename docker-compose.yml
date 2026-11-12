@@ -1,0 +1,13 @@
+services:
+  agent:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./agent-data:/app/agent-data
+    # For an HTTPS WeChat bridge, expose only behind a reverse proxy.
+    # To use an Ollama server on the host, set provider.ollama_url
+    # to http://host.docker.internal:11434 and configure host Ollama networking.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # ports:
+    #   - "127.0.0.1:8765:8765"  # also set wechat.listen_host to 0.0.0.0 in config
